@@ -2,3 +2,10 @@
 *.iml
 */out/
 *.properties
+*.jar
+*.class
+*.bin
+*.json
+*.lock
+*.xml
+*.bat
