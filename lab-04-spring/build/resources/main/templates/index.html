@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    div.big_block {
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 0;
+        border-style: double;
+        border-color: #fa32a1;
+        display:  table;
+    }
+    div.row {
+        display:table-row;
+        width:auto;
+    }
+    div.small {
+        float:left;
+        display:table-column;
+        border-color: #23ab32;
+        border-style: inset;
+        margin: 15px 5px;
+        width:200px;
+        height: 120px;
+        text-align: center;
+    }
+    p {
+        font-size: 23px;
+        font-family: "Comic Sans MS", serif;
+        margin: 0;
+    }
+    p.b {
+        font-size: 12px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>забить место</title>
+</head>
+<body>
+<div class="big_block">
+    <div class="row">
+        <div class="small"><p>Авто</p></div>
+        <div class="small"><p>Время отправления</p></div>
+        <div class="small"><p>Место отправления</p></div>
+        <div class="small"><p>Точка назначения</p></div>
+        <div class="small"><p>Количество свободных мест</p></div>
+        <div class="small"><p>Имена пассаржиров</p></div>
+        <div class="small"><p>Занять место</p></div>
+    </div>
+    <div class="row" th:each="order : ${orders}">
+        <div class="small"><p th:text=${order.automobile}></p></div>
+        <div class="small"><p th:text=${order.departureTime.toString()}></p></div>
+        <div class="small"><p th:text=${order.departurePlace}></p></div>
+        <div class="small"><p th:text=${order.destinationPlace}></p></div>
+        <div class="small"><p th:text=${order.availableSeats}></p></div>
+        <div class="small">
+            <div th:each="passenger : ${order.passengers}">
+                <p class="b" th:text="${passenger.name}"></p>
+            </div>
+        </div>
+        <div class="small">
+            <div th:if="${order.availableSeats > 0}">
+            <a th:href="|/choosePassenger?orderId=${order.id}|"><p>поеду</p></a>
+            </div>
+            <div th:if="${order.availableSeats <= 0}">
+            <p>все занято</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

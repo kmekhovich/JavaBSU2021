@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    div.big_block {
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 0;
+        border-style: double;
+        border-color: #fa32a1;
+        display:  table;
+    }
+    div.row {
+        display:table-row;
+        width:auto;
+    }
+    div.small {
+        float:left;
+        display:table-column;
+        border-color: #23ab32;
+        border-style: inset;
+        margin: 15px 5px;
+        width:200px;
+        height: 120px;
+        text-align: center;
+    }
+    p {
+        font-size: 23px;
+        font-family: "Comic Sans MS", serif;
+        margin: 0;
+    }
+    a   .b {
+        font-size: 12px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>лучшая админка</title>
+</head>
+<body>
+<div class="big_block">
+    <div class="row">
+        <div class="small"><p>Авто</p></div>
+        <div class="small"><p>Время отправления</p></div>
+        <div class="small"><p>Место отправления</p></div>
+        <div class="small"><p>Точка назначения</p></div>
+        <div class="small"><p>Количество свободных мест</p></div>
+        <div class="small"><p>Имена пассаржиров</p></div>
+        <div class="small"><p>Занять место</p></div>
+    </div>
+    <div class="row" th:each="order : ${orders}">
+        <div class="small"><p th:text=${order.automobile}></p></div>
+        <div class="small"><p th:text=${order.departureTime.toString()}></p></div>
+        <div class="small"><p th:text=${order.departurePlace}></p></div>
+        <div class="small"><p th:text=${order.destinationPlace}></p></div>
+        <div class="small"><p th:text=${order.availableSeats}></p></div>
+        <div class="small">
+            <div th:each="passenger : ${order.passengers}">
+                <a th:href="|/admin/deletePassenger?orderId=${order.id}&passengerId=${passenger.id}|" class="b" th:text="|X_${passenger.name}_X|"></a>
+            </div>
+        </div>
+        <div class="small"><a th:href="|/admin/delete?orderId=${order.id}|"><p>удалить поездку</p></a></div>
+    </div>
+    <div class="row">
+        <p>добавление новой поездки</p>
+        <form th:action="@{/admin/add(object)}" th:object="${order}" method="POST">
+            <label>
+                авто:
+                <input type="text" name="automobile" th:field="*{automobile}" required/>
+            </label>
+            <label>
+                свободные места:
+                <input type="number" name="automobile" th:field="*{availableSeats}" required/>
+            </label>
+            <label>
+                место отправки:
+                <input type="text" name="automobile" th:field="*{departurePlace}" required/>
+            </label>
+            <label>
+                время отправки:
+                <input type="date" name="automobile" th:field="*{departureTime}" required/>
+            </label>
+            <label>
+                пудж:
+                <input type="text" name="automobile" th:field="*{destinationPlace}" required/>
+            </label>
+            <br>
+            <input type="submit" />
+        </form>
+    </div>
+</div>
+</body>
+</html>

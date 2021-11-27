@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    div.big_block {
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 20px;
+        border-style: double;
+        border-color: #fa32a1;
+        display:  table;
+    }
+    div.row {
+        display:table-row;
+        width:auto;
+    }
+    div.small {
+        float:left;
+        display:table-column;
+        border-color: #23ab32;
+        border-style: inset;
+        margin: 15px 5px;
+        width:200px;
+        height: 120px;
+        text-align:center;
+    }
+    p {
+        margin:0;
+        font-size: 23px;
+        font-family: "Comic Sans MS", serif;
+    }
+    form {
+        padding-left: 50px;
+    }
+    p.b {
+        font-size: 12px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>хто ты представься</title>
+</head>
+<body>
+<div class="big_block">
+    <div class="row">
+        <div class="small"><p>во такая конфигурация поездки:</p></div>
+        <div class="small"><p th:text=${order.automobile}></p></div>
+        <div class="small"><p th:text=${order.departureTime.toString()}></p></div>
+        <div class="small"><p th:text=${order.departurePlace}></p></div>
+        <div class="small"><p th:text=${order.destinationPlace}></p></div>
+        <div class="small"><p th:text=${order.availableSeats}></p></div>
+        <div class="small">
+            <div th:each="passenger : ${order.passengers}">
+                <p class="b" th:text="${passenger.name}"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            введи свой гендер:
+        </p>
+    </div>
+    <form th:action="@{/book(orderId=${order.id})}" method="POST">
+        <label>
+            гендер:
+            <input type="text" name="passengerName" th:value="${passenger.name}"/>
+        </label>
+        <br>
+        <input type="submit" />
+    </form>
+
+</div>
+</body>
+</html>
